@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import re
 from pathlib import Path
 
 import flet as ft
 
 try:
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
     import pygame
 
     pygame.mixer.init()
