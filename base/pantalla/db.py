@@ -22,6 +22,10 @@ from bson.errors import BSONError
 
 # ── MongoDB ──
 MONGO_URI = os.getenv("MONGO_URI", "")
+print(
+    f"MongoDB: MONGO_URI {'configurada' if MONGO_URI else 'NO configurada'}",
+    flush=True,
+)
 
 client = None
 usuarios_col = None
@@ -43,13 +47,13 @@ if MONGO_URI:
         db = client["dixlearn"]
         usuarios_col = db["usuarios"]
         usuarios_col.create_index("nombre", unique=True)
-        print("✅ Connected to MongoDB Atlas")
+        print("✅ Connected to MongoDB Atlas", flush=True)
     except Exception as e:
-        print(f"❌ Error connecting to MongoDB: {e}")
+        print(f"❌ Error connecting to MongoDB: {e!r}", flush=True)
         client = None
         usuarios_col = None
 else:
-    print("⚠️ MONGO_URI no configurada; funciones de usuario deshabilitadas")
+    print("⚠️ MONGO_URI no configurada; funciones de usuario deshabilitadas", flush=True)
 
 # Make sure the connection (and its whole pool) is released the moment the
 # app process exits, instead of lingering until Atlas eventually times it out.
